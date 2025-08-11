@@ -11,10 +11,12 @@ const authMiddleware = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        const user = await userModel.findOne({
-            id: decoded.id
-        })
+        const user = await userModel.findById(
+            decoded.id
+        ).select('-password -__v -createdAt -updatedAt')
+
         req.user = user
+        
         next()
     } catch (error) {
         res.status(401).json({ message: "Unauthorized" })
