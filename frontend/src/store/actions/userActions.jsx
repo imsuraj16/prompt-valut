@@ -1,5 +1,6 @@
 import axios from "../../api/apiconfig";
 import { loadUser,logoutUser } from "../reducers/userSlice";
+import { getUserPrompts } from "./promptActions";
 
 export const registerUser = (userData) => async (dispatch) => {
   try {
@@ -28,6 +29,7 @@ export const currentUser = () => async (dispatch) => {
     dispatch(loadUser(data));
   } catch (error) {
     console.log(error.message);
+    dispatch(getUserPrompts())
   }
 };
 
